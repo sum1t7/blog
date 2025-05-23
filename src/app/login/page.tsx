@@ -6,60 +6,59 @@ import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setloading] = useState(false)
+  const [loading, setloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-   useEffect(() => {
+  useEffect(() => {
     async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
-        console.log("User is already logged in" , session);
+        console.log("User is already logged in", session);
         router.push("/");
-      }
-      else{
+      } else {
         console.log("User is not logged in");
       }
     }
     checkSession();
   }, [router]);
 
-   interface LoginEvent extends React.MouseEvent<HTMLButtonElement, MouseEvent> {}
-
   interface LoginError {
     message: string;
   }
 
-  async function handleLogin(event: LoginEvent) {
-    setloading(true)
+  async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    setloading(true);
     event.preventDefault();
-    setError(null);  
-    const { error }: { error: LoginError | null } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    setError(null);
+    const { error }: { error: LoginError | null } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
     if (error) {
       setError(error.message);
-
     } else {
-      router.push("/"); 
+      router.push("/");
     }
-    setloading(false)
+    setloading(false);
   }
-
 
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <p className="text-stone-600">Loading post...</p>
       </div>
-    );}
+    );
+  }
 
   return (
     <div className="min-h-screen bg-stone-50 flex items-center justify-center">
       <div className="bg-white border border-stone-300 p-8 w-full max-w-md">
         <h1 className="text-3xl font-light text-stone-900 mb-6">Log In</h1>
-        
+
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="flex flex-col gap-4">
           <input
@@ -84,15 +83,18 @@ export default function LoginPage() {
           </button>
         </div>
         <div className="flex justify-between items-center ">
-
-        <p className="text-sm mt-4 text-stone-600">
-          Don't have an account?{" "}
-          <a href="/sign-up" className="text-stone-700 hover:text-stone-900">
-            Sign Up
-          </a>
-        </p>
-         <p className="text-sm mt-4 text-fuchsia-500 cursor-pointer" onClick={() => router.push("/")}>
-          Back  </p>
+          <div className="text-sm mt-4 flex gap-1 text-stone-600">
+            <p>Don&apos;t have an account?</p>
+            <a href="/sign-up" className="text-stone-700 hover:text-stone-900">
+              Sign Up
+            </a>
+          </div>
+          <p
+            className="text-sm mt-4 text-fuchsia-500 cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            Back{" "}
+          </p>
         </div>
       </div>
     </div>

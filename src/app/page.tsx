@@ -150,7 +150,7 @@ export default async function HomePage() {
           </div>
         ) : (
           <div className="space-y-6">
-            {posts.map((post, index) => (
+            {posts.map((post) => (
               <article
                 key={post.id}
                 className="bg-white text-stone-900 font-medium border border-stone-300 rounded-none hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 group"

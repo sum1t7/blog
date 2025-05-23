@@ -1,11 +1,8 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { createClient } from "@supabase/supabase-js";
-
+ 
 export default function SignUpPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -13,18 +10,16 @@ export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  interface SignUpevent
-    extends React.MouseEvent<HTMLButtonElement, MouseEvent> {}
   interface SignUpError {
     message: string;
   }
 
-  const handleSignUp = async (e: SignUpevent) => {
+  const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const {error }: { error: SignUpError | null } = await supabase.auth.signUp(
+    const { error }: { error: SignUpError | null } = await supabase.auth.signUp(
       {
         options: {
           data: {
@@ -37,11 +32,11 @@ export default function SignUpPage() {
     );
 
     if (error) {
+      setError(error.message);
     } else {
       setShowConfirmation(true);
     }
 
-    setLoading(false);
     setLoading(false);
   };
 
@@ -55,7 +50,7 @@ export default function SignUpPage() {
               Check your email for a confirmation link.
             </h1>
             <p className="text-sm mt-4 text-stone-600">
-              If you don't see it, check your spam folder.
+              If you don&apos;t see it, check your spam folder.
             </p>
           </div>
         ) : (

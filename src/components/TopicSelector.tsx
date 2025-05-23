@@ -1,13 +1,20 @@
 'use client';
 
-import Select from 'react-select';
+import Select, { MultiValue, StylesConfig } from 'react-select';
 
-const topicOptions = [
-  { value: 'Tech', label: 'Tech', color: '#1E3A8A', bg: '#DBEAFE' },         // Blue
-  { value: 'Life', label: 'Life', color: '#166534', bg: '#DCFCE7' },         // Green
-  { value: 'Philosophy', label: 'Philosophy', color: '#92400E', bg: '#FEF3C7' }, // Yellow-Brown
-  { value: 'Gaming', label: 'Gaming', color: '#7C3AED', bg: '#EDE9FE' },     // Purple
-  { value: 'Music', label: 'Music', color: '#B91C1C', bg: '#FEE2E2' },        // Red
+interface TopicOption {
+  value: string;
+  label: string;
+  color: string;
+  bg: string;
+}
+
+const topicOptions: TopicOption[] = [
+  { value: 'Tech', label: 'Tech', color: '#1E3A8A', bg: '#DBEAFE' },         
+  { value: 'Life', label: 'Life', color: '#166534', bg: '#DCFCE7' },          
+  { value: 'Philosophy', label: 'Philosophy', color: '#92400E', bg: '#FEF3C7' },  
+  { value: 'Gaming', label: 'Gaming', color: '#7C3AED', bg: '#EDE9FE' },      
+  { value: 'Music', label: 'Music', color: '#B91C1C', bg: '#FEE2E2' },         
 ];
 
 export default function TopicSelector({
@@ -19,26 +26,30 @@ export default function TopicSelector({
 }) {
   const selectedOptions = topicOptions.filter(opt => value.includes(opt.value));
 
-  const customStyles = {
-    multiValue: (styles: any, { data }: any) => ({
+  const customStyles: StylesConfig<TopicOption, true> = {
+    multiValue: (styles, { data }) => ({
       ...styles,
       backgroundColor: data.bg,
       color: data.color,
       borderRadius: '6px',
       padding: '2px 4px',
     }),
-    multiValueLabel: (styles: any, { data }: any) => ({
+    multiValueLabel: (styles, { data }) => ({
       ...styles,
       color: data.color,
       fontWeight: 600,
     }),
-    multiValueRemove: (styles: any) => ({
+    multiValueRemove: (styles) => ({
       ...styles,
       ':hover': {
         backgroundColor: 'transparent',
         color: 'black',
       },
     }),
+  };
+
+  const handleChange = (selected: MultiValue<TopicOption>) => {
+    onChange(selected.map(s => s.value));
   };
 
   return (
@@ -48,7 +59,7 @@ export default function TopicSelector({
         isMulti
         options={topicOptions}
         value={selectedOptions}
-        onChange={(selected) => onChange(selected.map((s: any) => s.value))}
+        onChange={handleChange}
         className="text-black"
         styles={customStyles}
       />
