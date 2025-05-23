@@ -4,11 +4,9 @@
 </p>
 
 
-<p align="center">
 A modern blogging platform built with [Next.js](https://nextjs.org/) and [Supabase](https://supabase.com/).  
 Features authentication, markdown editing, topic tagging, Minimalisitc UI. 
-</p>
-
+ 
 ## Features
 - User Auth with supabase.
 - Create , edit , delete , read Blogs from everyone.
