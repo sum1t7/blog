@@ -47,7 +47,7 @@ export default function SignUpPage() {
         {showConfirmation ? (
           <div>
             <h1 className="text-3xl font-light text-stone-900 mb-6">
-              Check your email for a confirmation link.
+              Check your email for a confirmation link and log back in 🦭
             </h1>
             <p className="text-sm mt-4 text-stone-600">
               If you don&apos;t see it, check your spam folder.
