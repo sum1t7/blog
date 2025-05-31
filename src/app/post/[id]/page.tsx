@@ -14,30 +14,89 @@ type Post = {
   topics: string[];
 };
 
+type PostMetadata = {
+  id: string;
+  post_id: string;
+  views: number;
+}; 
+
 export default function PostPage() {
   const { id } = useParams();
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
+  const [postMetadata, setPostMetadata] = useState<PostMetadata | null>(null);
   const [user, setUser] = useState<{ id: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchPostAndUser = async () => {
       setLoading(true);
-      const { data: userData } = await supabase.auth.getUser();
-      setUser(userData?.user);
+      
+       const [userResponse, postResponse, metadataResponse] = await Promise.all([
+        supabase.auth.getUser(),
+        supabase.from("posts").select("*").eq("id", id).single(),
+        supabase.from("post_metadata").select("*").eq("post_id", id).single()
+      ]);
 
-      const { data, error } = await supabase
-        .from("posts")
-        .select("*")
-        .eq("id", id)
-        .single();
+      setUser(userResponse.data?.user || null);
+      
+      if (!postResponse.error) {
+        setPost(postResponse.data);
+      }
 
-      if (!error) setPost(data);
+      if (!metadataResponse.error) {
+        setPostMetadata(metadataResponse.data);
+      }
+      
       setLoading(false);
     };
 
     fetchPostAndUser();
+  }, [id]);
+
+  useEffect(() => {
+    const updateViewCount = async () => {
+      if (!id) return;
+
+      try {
+         const { data, error } = await supabase.rpc('increment_post_views', {
+          post_id: id
+        });
+
+        if (error) {
+          console.error("Error updating post views:", error);
+          
+           const { data: metadata, error: upsertError } = await supabase
+            .from("post_metadata")
+            .upsert(
+              { post_id: id, views: 1 },
+              { 
+                onConflict: 'post_id',
+                ignoreDuplicates: false 
+              }
+            )
+            .select()
+            .single();
+
+          if (!upsertError && metadata) {
+            setPostMetadata(metadata);
+          }
+        } else {
+           setPostMetadata(prev => prev ? { ...prev, views: data } : { 
+            id: '', 
+            post_id: id as string, 
+            views: data 
+          });
+        }
+      } catch (error) {
+        console.error("Error in updateViewCount:", error);
+      }
+    };
+
+     if (id) {
+      updateViewCount();
+    }
   }, [id]);
 
   const topicStyles: Record<string, { bg: string; color: string }> = {
@@ -241,6 +300,10 @@ export default function PostPage() {
                   of this post
                 </p>
               )}
+
+              <p className="text-xs text-stone-500">
+                views: {postMetadata?.views || 0}
+              </p>
             </div>
           </footer>
         </motion.div>
