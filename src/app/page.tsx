@@ -76,7 +76,7 @@ export default async function HomePage() {
                   Recent{" "}
                 </span>
                 Posts{" "}
-                <span className="-ml-6 lg:text-xl md:text-xl hover:text-6xl  cursor-none forseal" >
+                <span className="-ml-6 text-xl  hover:text-4xl  cursor-none forseal  " >
                   🦭
                 </span>
               </h1>
