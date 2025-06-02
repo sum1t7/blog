@@ -1,11 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 export const dynamic = "force-dynamic";
-import Image from "next/image"; 
+import Image from "next/image";
 
 export default async function HomePage() {
   const supabase = await createClient();
-
 
   const {
     data: { user },
@@ -56,16 +55,13 @@ export default async function HomePage() {
     Music: { bg: "bg-red-100", color: "text-red-800" },
   };
 
- 
-
-
   return (
     <div className="min-h-screen bg-stone-50">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <header className="mb-12">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex formainheading space-x-6 items-center justify-between mb-6">
             <div>
-              <h1 className="text-8xl font-bold text-stone-900 mb-2">
+              <h1 className=" text-8xl forheading font-bold text-stone-900 mb-2">
                 <span
                   style={{
                     WebkitTextStroke: "2px #222",
@@ -79,9 +75,11 @@ export default async function HomePage() {
                 >
                   Recent{" "}
                 </span>
-                Posts <span className="-ml-6 text-xl hover:text-6xl cursor-none" >🦭</span>
+                Posts{" "}
+                <span className="-ml-6 lg:text-xl md:text-xl hover:text-6xl  cursor-none forseal" >
+                  🦭
+                </span>
               </h1>
-              
             </div>
             <div>
               {user ? (
@@ -95,7 +93,7 @@ export default async function HomePage() {
               ) : (
                 <Link
                   href="/login"
-                  className="px-6 py-2 bg-white text-stone-900 font-medium border border-stone-300 rounded-none hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
+                  className="px-6 py-2 bg-white lg:block md:block sm:block  hidden text-stone-900 font-medium border border-stone-300 rounded-none hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
                 >
                   Login
                 </Link>
@@ -174,13 +172,31 @@ export default async function HomePage() {
                       />
                     </svg>
                   </div>
-<div className="absolute inset-0 -z-2 pointer-events-none overflow-hidden   rounded-lg hidden group-hover:block">
-  <div className="relative w-full h-full flex backdrop-blur-lg  ">
-    <Image src="/blob.svg" className="blobs blob1 opacity-50 z-0 absolute" alt="Blob" width={128} height={128} />
-    <Image src="/blob1.svg" className="blobs blob2 opacity-50 z-0 absolute" alt="Blob" width={128} height={128} />
-    <Image src="/blob2.svg" className="blobs blob3 opacity-50 z-0 absolute" alt="Blob" width={128} height={128} />
-  </div>
-</div>
+                  <div className="absolute inset-0 -z-2 pointer-events-none overflow-hidden hidden rounded-lg group-hover:block">
+                    <div className="relative w-full h-full flex backdrop-blur-lg  ">
+                      <Image
+                        src="/blob.svg"
+                        className="blobs blob1 opacity-50 z-0 absolute"
+                        alt="Blob"
+                        width={128}
+                        height={128}
+                      />
+                      <Image
+                        src="/blob1.svg"
+                        className="blobs blob2 opacity-50 z-0 absolute"
+                        alt="Blob"
+                        width={128}
+                        height={128}
+                      />
+                      <Image
+                        src="/blob2.svg"
+                        className="blobs blob3 opacity-50 z-0 absolute"
+                        alt="Blob"
+                        width={128}
+                        height={128}
+                      />
+                    </div>
+                  </div>
                   <div className="flex items-center justify-between">
                     <time className="text-sm text-stone-500">
                       {new Date(post.created_at).toLocaleDateString("en-US", {
@@ -215,7 +231,6 @@ export default async function HomePage() {
                     )}
                   </div>
                 </Link>
-
               </article>
             ))}
           </div>
@@ -256,9 +271,6 @@ export default async function HomePage() {
               Login
             </Link>
             <p className="text-stone-600">to create a post</p>
-           
-
- 
           </footer>
         )}
       </div>

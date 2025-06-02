@@ -100,3 +100,26 @@ body {
     left: 0px; top: 0px;
   }
 }
+
+
+@media (max-width: 525px) {
+  .forseal{
+    font-size: 60px;
+  }
+  .forheading{
+    font-size: 70px;
+    align-content: center;
+    text-align: center;
+  }
+  .forblobs{
+    display: block;
+  }
+  .forspace{
+    gap: 40px;
+  }
+  .formainheading{
+    gap: 20px;
+    flex-direction: column;
+  }
+  
+}

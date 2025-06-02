@@ -75,7 +75,7 @@ export default function EditPostPage() {
     <div className="min-h-screen bg-stone-50">
       <div className="max-w-6xl mx-auto px-6 py-12">
          <div className="mb-12">
-          <h1 className="text-9xl font-light text-center text-stone-900 mb-2">
+          <h1 className="text-9xl font-light text-center forheading text-stone-900 mb-2">
             Edit
             <span
               style={{

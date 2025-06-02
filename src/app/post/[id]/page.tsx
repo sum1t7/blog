@@ -58,7 +58,9 @@ export default function PostPage() {
   useEffect(() => {
     const updateViewCount = async () => {
       if (!id) return;
+       if (post && user?.id === post.author_id) return;
 
+  
       try {
          const { data, error } = await supabase.rpc('increment_post_views', {
           post_id: id
@@ -82,7 +84,7 @@ export default function PostPage() {
           if (!upsertError && metadata) {
             setPostMetadata(metadata);
           }
-        } else {
+        }  else {
            setPostMetadata(prev => prev ? { ...prev, views: data } : { 
             id: '', 
             post_id: id as string, 
@@ -159,11 +161,11 @@ export default function PostPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <header className="mb-8">
-            <h1 className="text-5xl md:text-6xl font-extrabold text-stone-900 mb-6 leading-tight tracking-tight drop-shadow-sm">
+            <h1 className="text-5xl forheading md:text-6xl font-extrabold text-stone-900 mb-6 leading-tight tracking-tight drop-shadow-sm">
               {post.title}
             </h1>
 
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex forspace items-center justify-between mb-6">
               <p className="text-sm text-stone-500">
                 Published{" "}
                 {new Date(post.created_at).toLocaleDateString("en-US", {
@@ -286,12 +288,12 @@ export default function PostPage() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <footer className="mt-12 pt-8 border-t border-stone-200">
-            <div className="flex items-center justify-between">
+            <div className="flex forspace items-center justify-between">
               <button
                 onClick={() => router.push("/")}
                 className="px-6 py-3 bg-stone-900 text-white font-medium rounded-none hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
               >
-                ← Back to All Posts
+                ← Back 
               </button>
 
               {isAuthor && (

@@ -78,7 +78,7 @@ const topicStyles: Record<string, { bg: string; color: string }> = {
     <div className="min-h-screen bg-stone-50">
       <div className="max-w-6xl mx-auto px-6 py-12">
          <div className="mb-12">
-          <h1 className="text-9xl font-light text-center text-stone-900 mb-2">
+          <h1 className="text-9xl forheading font-light text-center text-stone-900 mb-2">
             Create
             <span
               style={{

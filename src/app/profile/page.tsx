@@ -50,7 +50,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+    <div className="min-h-screen bg-stone-50 px-10 flex items-center justify-center">
       <div className="bg-white border border-stone-300 p-8 w-full max-w-md">
         <h1 className="text-3xl font-light text-stone-900 mb-6">Profile</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
